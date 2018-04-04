@@ -32,9 +32,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/newsScraper", {
-    useMongoClient: true
-});
+mongoose.connect("mongodb://localhost/newsScraper"};
 
 var db = mongoose.connection;
 
