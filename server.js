@@ -4,23 +4,11 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Requiring our Note and Article models
-// var Note = require("./models/Note.js");
-// var Article = require("./models/Article.js");
-
-// Our scraping tools
-// var request = require("request");
-// var cheerio = require("cheerio");
-
-// Set mongoose to leverage built in JavaScript ES6 Promises
-// mongoose.Promise = Promise;
-
-
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
-// Connect to the Mongo DB
 mongoose.Promise = Promise;
+// Connect to the Mongo DB
 mongoose.connect(MONGODB_URI);
 
 var db = mongoose.connection;
@@ -53,10 +41,6 @@ app.use("/", routes);
 // // Requiring our routes
 // require("./routes/scraper.js")(app);
 
-
-// Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/testNewsScraper1");
-
 // Show any mongoose errors
 db.on("error", function (error) {
     console.log("Mongoose Error: ", error);
@@ -64,7 +48,7 @@ db.on("error", function (error) {
 
 // Once logged in to the db through mongoose, log a success message
 db.once("open", function () {
-    console.log("Mongoose connection successful.");
+    console.log("Mongoose connection is successful");
 });
 
 // Listen on port
