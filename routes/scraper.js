@@ -122,6 +122,28 @@ router.get("/delete/:id", function (req, res) {
 });
 
 
+// Get an article by it's ObjectId
+router.get("/articles/:id", function (req, res) {
+
+    console.log("ID is getting read" + req.params.id);
+
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    Article.findOne({ "_id": req.params.id })
+
+        .populate('notes')
+
+        .exec(function (err, doc) {
+            if (err) {
+                console.log("Not able to find article and get notes.");
+            }
+            else {
+                console.log("We are getting article and maybe notes? " + doc);
+                res.json(doc);
+            }
+        });
+});
+
+
 // Delete a note
 router.get("/notes/:id", function (req, res) {
 
