@@ -104,7 +104,7 @@ router.post("/save", function (req, res) {
 });
 
 
-// Remove a  saved article
+// Delete a saved article
 router.get("/delete/:id", function (req, res) {
 
     console.log("ID is getting read for delete" + req.params.id);
@@ -118,5 +118,23 @@ router.get("/delete/:id", function (req, res) {
             console.log("Able to delete, Yay");
         }
         res.redirect("/savedarticles");
+    });
+});
+
+
+// Delete a note
+router.get("/notes/:id", function (req, res) {
+
+    console.log("ID is getting read for delete" + req.params.id);
+
+    console.log("Able to activate delete function.");
+
+    Note.findOneAndRemove({ "_id": req.params.id }, function (err, doc) {
+        if (err) {
+            console.log("Not able to delete:" + err);
+        } else {
+            console.log("Able to delete, Yay");
+        }
+        res.send(doc);
     });
 });
