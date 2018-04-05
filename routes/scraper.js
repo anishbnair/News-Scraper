@@ -70,3 +70,53 @@ router.post("/scrape", function (req, res) {
 
     });
 });
+
+
+// Save an article
+router.post("/save", function (req, res) {
+
+    console.log("This is the title: " + req.body.title);
+
+    var newArticleObject = {};
+
+    newArticleObject.title = req.body.title;
+
+    newArticleObject.link = req.body.link;
+
+    var entry = new Article(newArticleObject);
+
+    console.log("We can save the article: " + entry);
+
+    // Now, save that entry to the db
+    entry.save(function (err, doc) {
+        // Log any errors
+        if (err) {
+            console.log(err);
+        }
+        // Or log the doc
+        else {
+            console.log(doc);
+        }
+    });
+
+    res.redirect("/savedarticles");
+
+});
+
+
+// Remove a  saved article
+router.get("/delete/:id", function (req, res) {
+
+    console.log("ID is getting read for delete" + req.params.id);
+
+    console.log("Able to activate delete function.");
+
+    Article.findOneAndRemove({ "_id": req.params.id }, function (err, offer) {
+        if (err) {
+            console.log("Not able to delete:" + err);
+        } else {
+            console.log("Able to delete, Yay");
+        }
+        res.redirect("/savedarticles");
+    });
+});
