@@ -33,3 +33,29 @@ $(document).on("click", "#modalbutton", function () {
             $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
         });
 });
+
+
+// Save note
+$(document).on("click", "#savenote", function () {
+    // Grab the id associated with the article from the submit button
+    var thisId = $(this).attr("data-id");
+    // Run a POST request to change the note, using what's entered in the inputs
+    $.ajax({
+        method: "POST",
+        url: "/articles/" + thisId,
+        data: {
+            // Value taken from note textarea
+            body: $("#bodyinput").val()
+        }
+    })
+        // With that done
+        .done(function (data) {
+            $("#notelist").empty();
+            for (var i = 0; i < data.notes.length; i++) {
+                $("#notelist").append("<li id='" + data.notes[i]._id + "'>" + data.notes[i].body + " " + "<button data-id='" + data.notes[i]._id +
+                    "' id='deletenote'>X</button></li>");
+            }
+        });
+    // Also, remove the values entered in the input and textarea for note entry
+    $("#bodyinput").val("");
+});
