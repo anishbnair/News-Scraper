@@ -4,12 +4,26 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
+// Requiring our Note and Article models
+// var Note = require("./models/Note.js");
+// var Article = require("./models/Article.js");
+
 // Our scraping tools
-var request = require("request");
-var cheerio = require("cheerio");
+// var request = require("request");
+// var cheerio = require("cheerio");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
+// mongoose.Promise = Promise;
+
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
 mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+var db = mongoose.connection;
 
 // Port
 var PORT = process.env.PORT || 8080;
@@ -31,10 +45,17 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/newsScraper"};
+// Import routes and give the server access to them.
+var routes = require("./routes/scraper.js");
 
-var db = mongoose.connection;
+app.use("/", routes);
+
+// // Requiring our routes
+// require("./routes/scraper.js")(app);
+
+
+// Connect to the Mongo DB
+// mongoose.connect("mongodb://localhost/testNewsScraper1");
 
 // Show any mongoose errors
 db.on("error", function (error) {
