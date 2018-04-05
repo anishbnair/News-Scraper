@@ -190,3 +190,7 @@ router.get("/notes/:id", function (req, res) {
         res.send(doc);
     });
 });
+
+
+// Export routes for server.js to use
+module.exports = router;
