@@ -35,7 +35,7 @@ $(document).on("click", "#modalbutton", function () {
 });
 
 
-// Save note
+// Save a note
 $(document).on("click", "#savenote", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
@@ -58,4 +58,20 @@ $(document).on("click", "#savenote", function () {
         });
     // Also, remove the values entered in the input and textarea for note entry
     $("#bodyinput").val("");
+});
+
+
+// Delete a note
+$(document).on("click", "#deletenote", function () {
+    // Grab the id associated with the note
+    var thisId = $(this).attr("data-id");
+    // Run a POST request to delete the note
+    $.ajax({
+        method: "GET",
+        url: "/notes/" + thisId,
+    })
+        // With that done
+        .done(function (data) {
+            $("#" + data._id).remove();
+        });
 });
